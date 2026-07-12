@@ -36,7 +36,7 @@ contract suites before either consumer is released.
 
 ## Transport profiles
 
-- HA Core/Container on Linux: a resident `geist-home` process and a mode-0600
+- HA Core/Container on Linux: a resident Geist process and a mode-0600
   Unix socket in the HA config directory.
 - HA OS/Supervised: a protected HA app with an internal-only transport. No host
   ports, HA credentials, Docker socket, host namespaces, or `/config` mount.

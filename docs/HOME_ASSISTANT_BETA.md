@@ -5,14 +5,15 @@ Use a non-critical HA instance or expose only one harmless light at first.
 
 ## Three-minute setup
 
-1. Download the `geist-home-<platform>.tar.gz` asset and `SHA256SUMS` from the
+1. Download the embedded-model `geist-bitnet-<platform>.tar.gz` asset and
+   `SHA256SUMS` from the
    same release. Verify it with `sha256sum -c SHA256SUMS --ignore-missing`.
 2. From the source/integration bundle, run:
 
    ```sh
    scripts/setup-home-assistant.sh \
      --ha-config /path/to/ha-config \
-     --binary /path/to/geist-home \
+     --binary /path/to/geist-bitnet \
      --activate
    ```
 
@@ -46,7 +47,7 @@ This shot list doubles as the acceptance flow and avoids editing tricks:
 
 - 0:00 show release asset and successful checksum verification;
 - 0:20 run guided setup and explain that Phase-3 actions execute inside HA;
-- 0:50 show active `geist-home` and private Unix socket permissions;
+- 0:50 show the active `geist-home` service and private socket permissions;
 - 1:10 expose `light.flur` in HA and add the conversation integration;
 - 1:35 ask status, turn it on, then turn it off;
 - 2:10 request an existing but unexposed test entity and show it remains off;

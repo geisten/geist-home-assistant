@@ -14,6 +14,7 @@ This is pre-1.0 software. The dynamic-tools integration and Linux Unix-socket
 developer path work; the protected HA app is currently a build-only scaffold.
 See [the implementation phases](docs/HOME_ASSISTANT_IMPLEMENTATION_PHASES.md)
 for the executable roadmap.
+The complete documentation map is in [docs/README.md](docs/README.md).
 
 ## Repository layout
 
@@ -32,7 +33,7 @@ Release images additionally follow the immutable-input rules in
 make test
 ```
 
-For Home Assistant Core or Container on Linux, build or download `geist-home`
+For Home Assistant Core or Container on Linux, build or download `geist`
 from Geist and follow [the beta guide](docs/HOME_ASSISTANT_BETA.md). The runtime
 keeps the model resident and communicates through a permission-gated Unix
 socket; no REST compatibility layer exists.

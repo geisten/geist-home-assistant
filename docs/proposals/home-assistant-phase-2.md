@@ -34,7 +34,7 @@ or compatibility transport in the product.
 ```mermaid
 flowchart LR
     U["User / Assist pipeline"] --> I["geist Conversation integration"]
-    I -->|"request + exposure snapshot"| R["geist-home runtime"]
+    I -->|"request + exposure snapshot"| R["Geist runtime"]
     R -->|"typed tool request"| I
     I --> P{"Exposure + policy validation"}
     P -->|"allowed"| H["Home Assistant service/state API"]
@@ -54,7 +54,7 @@ schemas. Entity unexposure is rechecked at the HA action boundary.
 | Profile | Runtime packaging | Transport | Home Assistant credentials |
 | :-- | :-- | :-- | :-- |
 | HA OS / Supervised | Geist Home Assistant app (formerly add-on), model embedded in the image | private internal TCP, no host port | none in the runtime; integration executes actions |
-| Core / Container on Linux | released `geist-home` binary + systemd | Unix socket mode `0600` | none in the runtime; integration executes actions |
+| Core / Container on Linux | released embedded-model `geist` binary + systemd | Unix socket mode `0600` | none in the runtime; integration executes actions |
 
 The app runs protected, without host networking, Docker access, privileged
 capabilities, or a mount of Home Assistant's configuration directory. Persistent
@@ -71,7 +71,7 @@ a TCP listener.
 ## Dynamic tools v1
 
 The integration uses the host-neutral newline-framed
-[dynamic-tools-v1 contract](dynamic-tools-v1.md): it sends the complete offered
+[dynamic-tools-v1 contract](https://github.com/geisten/geisten/blob/codex/dynamic-tools-v1/docs/proposals/dynamic-tools-v1.md): it sends the complete offered
 toolset per conversation and owns execution. This is the only product protocol.
 Frames have explicit size limits and requests have deadlines. Unknown frame
 types, oversized frames, stale exposure versions, and invalid arguments fail
@@ -216,8 +216,11 @@ remain green.
 
 ## Agent handoff contract
 
-This document is the ordered Phase-2 implementation plan. `ROADMAP.md` is the
-portfolio overview; `dynamic-tools-v1.md` is the normative wire/schema contract.
+This document is the detailed Phase-2 design. The executable portfolio and
+status live in `HOME_ASSISTANT_IMPLEMENTATION_PHASES.md`; the engine
+repository's `dynamic-tools-v1.md` is the
+normative wire/schema contract and this repository pins compatibility fixtures
+under `protocol/`.
 An implementing agent must start with the first unfinished phase, keep each PR
 within one phase, and update the status and evidence here in the same PR.
 
