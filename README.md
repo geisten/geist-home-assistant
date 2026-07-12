@@ -33,6 +33,15 @@ Release images additionally follow the immutable-input rules in
 make test
 ```
 
+## Install through HACS
+
+Until the repository is listed by default, add
+`https://github.com/geisten/geist-home-assistant` as a custom HACS integration
+repository. Install **Geist Conversation**, restart Home Assistant, then add it
+under Settings → Devices & services. Tagged releases contain the validated
+`geist_conversation.zip`; the default branch is intentionally not offered as
+an installable version.
+
 For Home Assistant Core or Container on Linux, build or download `geist`
 from Geist and follow [the beta guide](docs/HOME_ASSISTANT_BETA.md). The runtime
 keeps the model resident and communicates through a permission-gated Unix

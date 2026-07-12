@@ -3,6 +3,8 @@
   "name": "geist Conversation",
   "version": "0.1.0",
   "documentation": "https://github.com/geisten/geist-home-assistant",
+  "issue_tracker": "https://github.com/geisten/geist-home-assistant/issues",
+  "integration_type": "service",
   "dependencies": [
     "conversation"
   ],

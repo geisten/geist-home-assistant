@@ -46,8 +46,12 @@ the HA UI without inspecting daemon logs.
 
 ### P2.1 — HACS-ready integration package
 
-Pending: HACS repository metadata, Hassfest/HACS validation, release ZIP,
-version compatibility table, tagged install/upgrade test.
+Delivered: root `hacs.json`, required manifest metadata, deterministic release
+ZIP contract, HACS/Hassfest workflows, tag/version guard, and release workflow.
+
+Pending: publish the first tag, verify HACS install/upgrade against a disposable
+HA instance, add the integration to `home-assistant/brands`, then remove the
+temporary `brands` validation ignore before requesting default HACS inclusion.
 
 Exit gate: install and upgrade the custom integration through HACS from a tag.
 

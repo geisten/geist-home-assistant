@@ -9,6 +9,9 @@ This repository owns all Home Assistant product documentation:
 - `SUPPLY_CHAIN.md`: immutable app-image inputs and publishing requirements
 - `benchmarks/`: HA-specific Pi 5 and live-pipeline evidence
 
+HACS packaging is defined by root `hacs.json`,
+`.github/workflows/release-integration.yml`, and the model-free package test.
+
 The Geist engine repository owns inference internals, build architecture,
 generic deployment, performance benchmarks, and the normative
 `dynamic-tools-v1` protocol. This repository keeps only compatibility fixtures

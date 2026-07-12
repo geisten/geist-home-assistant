@@ -1,0 +1,7 @@
+{
+  "name": "Geist Conversation",
+  "zip_release": true,
+  "filename": "geist_conversation.zip",
+  "hide_default_branch": true,
+  "homeassistant": "2026.6.0"
+}

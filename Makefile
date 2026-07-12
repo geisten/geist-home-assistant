@@ -8,5 +8,6 @@ test:
 	@python3 tests/test_ha_operability.py
 	@python3 tests/test_ha_dynamic_tools_v1.py
 	@python3 tests/test_protocol_contract.py
+	@python3 tests/test_hacs_package.py
 	@tests/test_ha_install.sh
 	@tests/test_ha_setup.sh
