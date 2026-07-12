@@ -102,6 +102,11 @@ through HA UI; no YAML or daemon logs required.
 
 Purpose: install and supervise the resident runtime on HA OS.
 
+P2.3.2 is gated on a published Geist release that implements
+`dynamic-tools-v1` on Linux `aarch64` and `amd64`; see
+[the supply-chain contract](SUPPLY_CHAIN.md). Geist `v0.3.3` predates that
+protocol and must not be used as a fallback.
+
 Slices: ✅ protected-compatible `aarch64`/`amd64` scaffold, AppArmor, `/data`
 boundary, healthcheck and build-only CI; **NEXT:** pinned model/runtime inputs,
 signed image publishing, checksums, provenance and SBOM; then persistent cache,

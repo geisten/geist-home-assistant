@@ -23,6 +23,9 @@ for the executable roadmap.
 - `tests`: model-free policy, protocol, packaging, and lifecycle contracts
 - `protocol`: versioned compatibility fixtures for Geist's dynamic-tools API
 
+Release images additionally follow the immutable-input rules in
+[the supply-chain contract](docs/SUPPLY_CHAIN.md).
+
 ## Development
 
 ```sh
