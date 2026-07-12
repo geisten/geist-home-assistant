@@ -8,12 +8,12 @@ trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 mkdir -p "$tmp/bin"
 
 # The installer validates executability, not a model. This fixture represents a
-# release-provided geist-home; daemon behavior is covered by the branch's C tests.
-printf '#!/bin/sh\nprintf "usage: geist-home --serve SOCKET\\n"\n' >"$tmp/bin/geist-home"
-chmod 755 "$tmp/bin/geist-home"
+# Stand-in for a release-provided embedded-model Geist binary.
+printf '#!/bin/sh\nprintf "usage: geist --serve SOCKET\\n"\n' >"$tmp/bin/geist"
+chmod 755 "$tmp/bin/geist"
 
 install_cmd="$root/scripts/install-home-assistant.sh"
-common="--ha-config /srv/ha-config --binary $tmp/bin/geist-home --user geist --work-dir /srv/geist --state-dir /var/lib/geist-home --unit-dir /etc/systemd/system --destdir $tmp/root"
+common="--ha-config /srv/ha-config --binary $tmp/bin/geist --user geist --work-dir /srv/geist --state-dir /var/lib/geist-home --unit-dir /etc/systemd/system --destdir $tmp/root"
 
 # shellcheck disable=SC2086
 "$install_cmd" $common
@@ -28,7 +28,7 @@ test -f "$component/sensor.py"
 test -f "$component/diagnostics.py"
 test -f "$component/translations/de.json"
 test ! -e "$component/__pycache__"
-grep -q '^ExecStart=.*/geist-home --serve /srv/ha-config/geist.sock$' "$unit"
+grep -q '^ExecStart=.*/geist --serve /srv/ha-config/geist.sock$' "$unit"
 ! grep -q '^EnvironmentFile=' "$unit"
 
 # Create a recognizable installed v1, then upgrade; the installer must back it up.
