@@ -48,7 +48,8 @@ an installable version.
 
 The automated clean-install and replacement-upgrade check runs against a
 disposable Home Assistant 2026.6.1 container. The authenticated HACS UI smoke
-is tracked in [issue #10](https://github.com/geisten/geist-home-assistant/issues/10).
+and remaining Phase-4 gates are tracked in
+[epic #11](https://github.com/geisten/geist-home-assistant/issues/11).
 
 For Home Assistant Core or Container on Linux, build or download `geist`
 from Geist and follow [the beta guide](docs/HOME_ASSISTANT_BETA.md). The runtime

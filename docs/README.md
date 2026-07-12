@@ -21,4 +21,5 @@ under `../protocol/`; it does not duplicate or redefine the engine contract.
 Agents start with the first unfinished slice in
 `HOME_ASSISTANT_IMPLEMENTATION_PHASES.md`, use the detailed proposal when the
 slice points to it, and update status plus evidence in the same change.
+Phase 4 is tracked by GitHub epic #11 and implementation issues #10, #12, #13.
 Phase 5 is tracked by GitHub epic #2 and implementation issues #3 through #9.

@@ -48,6 +48,8 @@ in `geisten/geisten`; this plan continues with HA-owned product work.
 
 ## Phase 4 — HACS integration distribution 🚧
 
+Canonical tracking: [Phase 4 epic #11](https://github.com/geisten/geist-home-assistant/issues/11).
+
 Delivered: root `hacs.json`, required manifest metadata, deterministic release
 ZIP contract, HACS/Hassfest workflows, tag/version guard, and release workflow.
 
@@ -57,13 +59,21 @@ against a disposable HA Core container.
 
 Published: `v0.1.0-beta.1` with a validated `geist_conversation.zip` asset.
 
-Pending: manually install the beta through a real HACS UI and record the
-upgrade from this version to the next beta. A
+Remaining executable slices:
+
+1. [P4.1 real HACS UI clean install #10](https://github.com/geisten/geist-home-assistant/issues/10)
+2. [P4.2 second beta and real N-1 to N upgrade #12](https://github.com/geisten/geist-home-assistant/issues/12)
+3. [P4.3 compatibility matrix and release policy #13](https://github.com/geisten/geist-home-assistant/issues/13)
+
+P4.3 can proceed in parallel. P4.2 starts only after P4.1 and must contain a
+real reviewed integration change rather than an empty release. A
 separate `home-assistant/brands` PR is no longer required for this custom
 integration because HA 2026.3+ supports local `brand/` assets; move them to the
 Brands repository only if the integration later targets HA Core.
 
-Exit gate: install and upgrade the custom integration through HACS from a tag.
+Exit gate: clean-install and upgrade the custom integration through HACS from
+published tags, retain the Config Entry, remove obsolete package files, and
+publish redacted evidence for the tested compatibility matrix.
 
 ## Phase 5 — protected Home Assistant app 🚧 **NEXT**
 
