@@ -53,7 +53,10 @@ Delivered additionally: local HA 2026.3+ brand assets, validation without a
 brands ignore, and package-equivalent clean install/replacement-upgrade checks
 against a disposable HA Core container.
 
-Pending: publish and manually install the first beta tag through HACS. A
+Published: `v0.1.0-beta.1` with a validated `geist_conversation.zip` asset.
+
+Pending: manually install the beta through a real HACS UI and record the
+upgrade from this version to the next beta. A
 separate `home-assistant/brands` PR is no longer required for this custom
 integration because HA 2026.3+ supports local `brand/` assets; move them to the
 Brands repository only if the integration later targets HA Core.
