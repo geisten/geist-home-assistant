@@ -6,7 +6,7 @@ immutable request-scoped toolset over the local Unix socket and returns typed
 tool calls; it never receives Home Assistant credentials.
 
 Start the daemon on the host, e.g.:
-    ./geist-home --serve ~/ha-config/geist.sock
+    ./geist --serve ~/ha-config/geist.sock
 
 Then pick "geist" as the conversation agent of your Assist pipeline
 (Settings -> Voice assistants), or POST to /api/conversation/process with
@@ -18,8 +18,10 @@ from __future__ import annotations
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
+CONFIG_SCHEMA = cv.config_entry_only_config_schema
 PLATFORMS = [Platform.CONVERSATION, Platform.SENSOR]
 
 
