@@ -42,9 +42,11 @@ Delivered:
 Exit gate: configure, break, diagnose, repair, reconfigure, and unload through
 the HA UI without inspecting daemon logs.
 
-## HA Phase 2 — distribution 🚧 **NEXT**
+Phases 2 and 3 established the native beta and the host-neutral dynamic-tools
+contract before the repository split. Their normative engine artifacts now live
+in `geisten/geisten`; this plan continues with HA-owned product work.
 
-### P2.1 — HACS-ready integration package
+## Phase 4 — HACS integration distribution 🚧
 
 Delivered: root `hacs.json`, required manifest metadata, deterministic release
 ZIP contract, HACS/Hassfest workflows, tag/version guard, and release workflow.
@@ -63,24 +65,30 @@ Brands repository only if the integration later targets HA Core.
 
 Exit gate: install and upgrade the custom integration through HACS from a tag.
 
-### P2.2 — protected HA app
+## Phase 5 — protected Home Assistant app 🚧 **NEXT**
 
-1. ✅ Protected-compatible `aarch64`/`amd64` scaffold, restrictive AppArmor,
-   private runtime boundary, healthcheck, build-only CI.
-2. **NEXT, gated:** immutable runtime inputs, published per-architecture images
-   and generic manifest, checksums, Cosign signatures, provenance, SBOM, and
-   pull-by-digest health smoke tests.
-3. Pending: persistent model/cache lifecycle, watchdog, RAM/architecture checks,
-   backup/restore, upgrade, and rollback tests.
+Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assistant/issues/2).
 
-P2.2 item 2 requires a Geist release implementing `dynamic-tools-v1` for Linux
+1. [P5.1 Runtime-Lock and verification #3](https://github.com/geisten/geist-home-assistant/issues/3)
+2. [P5.2 Signed multi-arch images #4](https://github.com/geisten/geist-home-assistant/issues/4)
+3. [P5.3 Private app transport and Config Flow #5](https://github.com/geisten/geist-home-assistant/issues/5)
+4. [P5.4 Model/cache/resource lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
+5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
+6. [P5.6 Backup, upgrade and rollback #8](https://github.com/geisten/geist-home-assistant/issues/8)
+7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
+
+The protected `aarch64`/`amd64` scaffold, restrictive AppArmor, private runtime
+boundary, healthcheck, and build-only CI are already complete.
+
+P5.1 requires a Geist release implementing `dynamic-tools-v1` for Linux
 `aarch64` and `amd64`. Geist `v0.3.3` predates the protocol and is not a valid
-fallback. See [SUPPLY_CHAIN.md](SUPPLY_CHAIN.md) and GitHub issue #1.
+fallback. See [SUPPLY_CHAIN.md](SUPPLY_CHAIN.md) and
+[geisten/geisten#87](https://github.com/geisten/geisten/issues/87).
 
 Exit gate: add repository, install app, start it, add the integration, and run
 the first correct request without SSH.
 
-## HA Phase 3 — product evidence 🚧 pending
+## Phase 6 — product evidence 🚧 pending
 
 Publish at least 150 cases covering state/action, brightness/temperature,
 areas, ambiguity, multiple calls, follow-ups, language variants, unexposed and
@@ -94,7 +102,7 @@ and hardware. Require zero exposure-boundary violations and a 24-hour Pi 5 soak.
 Exit gate: corpus, runner, raw results, security cases, and resource bounds are
 published and reproducible.
 
-## HA Phase 4 — public beta 🚧 pending
+## Phase 7 — public beta 🚧 pending
 
 Prepare the HACS/App repository listing, compatibility and support policy,
 privacy/security documentation, issue templates, release notes, and beta tester

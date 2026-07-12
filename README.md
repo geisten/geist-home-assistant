@@ -42,6 +42,14 @@ under Settings → Devices & services. Tagged releases contain the validated
 `geist_conversation.zip`; the default branch is intentionally not offered as
 an installable version.
 
+| Integration | Minimum Home Assistant | Runtime protocol | Status |
+| :-- | :-- | :-- | :-- |
+| [`v0.1.0-beta.1`](https://github.com/geisten/geist-home-assistant/releases/tag/v0.1.0-beta.1) | 2026.6.0 | `dynamic-tools-v1` | first HACS beta |
+
+The automated clean-install and replacement-upgrade check runs against a
+disposable Home Assistant 2026.6.1 container. The authenticated HACS UI smoke
+is tracked in [issue #10](https://github.com/geisten/geist-home-assistant/issues/10).
+
 For Home Assistant Core or Container on Linux, build or download `geist`
 from Geist and follow [the beta guide](docs/HOME_ASSISTANT_BETA.md). The runtime
 keeps the model resident and communicates through a permission-gated Unix

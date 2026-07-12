@@ -1,6 +1,6 @@
 # Supply-chain contract
 
-P2.3.2 publishes an HA app only from immutable inputs. A release lock must be
+Phase 5 publishes an HA app only from immutable inputs. A release lock must be
 committed before the publish workflow is enabled and must contain, per
 architecture:
 
@@ -19,6 +19,8 @@ digest and runs the healthcheck through emulation or native runners.
 
 The newest published Geist release is `v0.3.3`. It predates the resident
 `dynamic-tools-v1` implementation and is therefore intentionally rejected as
-an HA app input. P2.3.2 remains open until the engine repository publishes a
+an HA app input. P5.1 remains blocked until the engine repository publishes a
 release from the dynamic-tools branch for both Linux architectures. No mutable
-or incompatible fallback is permitted.
+or incompatible fallback is permitted. Track the engine prerequisite in
+[geisten/geisten#87](https://github.com/geisten/geisten/issues/87) and the HA
+work in [Phase 5 epic #2](https://github.com/geisten/geist-home-assistant/issues/2).
