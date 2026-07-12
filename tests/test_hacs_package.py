@@ -26,6 +26,9 @@ for key in ("domain", "name", "version", "documentation", "issue_tracker",
     assert key in manifest, key
 assert manifest["domain"] == COMPONENT.name
 assert manifest["integration_type"] == "service"
+assert manifest["version"] == "0.1.0-beta.1"
+assert (COMPONENT / "brand/icon.png").is_file()
+assert (COMPONENT / "brand/icon@2x.png").is_file()
 
 with tempfile.TemporaryDirectory() as tmp:
     artifact = Path(tmp) / hacs["filename"]
@@ -40,6 +43,8 @@ with tempfile.TemporaryDirectory() as tmp:
         assert "__init__.py" in names
         assert "translations/de.json" in names
         assert "translations/en.json" in names
+        assert "brand/icon.png" in names
+        assert "brand/icon@2x.png" in names
         assert not any("__pycache__" in name or name.endswith(".pyc") for name in names)
         packaged_manifest = json.loads(package.read("manifest.json"))
         assert packaged_manifest["version"] == manifest["version"]

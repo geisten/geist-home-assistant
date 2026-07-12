@@ -49,9 +49,14 @@ the HA UI without inspecting daemon logs.
 Delivered: root `hacs.json`, required manifest metadata, deterministic release
 ZIP contract, HACS/Hassfest workflows, tag/version guard, and release workflow.
 
-Pending: publish the first tag, verify HACS install/upgrade against a disposable
-HA instance, add the integration to `home-assistant/brands`, then remove the
-temporary `brands` validation ignore before requesting default HACS inclusion.
+Delivered additionally: local HA 2026.3+ brand assets, validation without a
+brands ignore, and package-equivalent clean install/replacement-upgrade checks
+against a disposable HA Core container.
+
+Pending: publish and manually install the first beta tag through HACS. A
+separate `home-assistant/brands` PR is no longer required for this custom
+integration because HA 2026.3+ supports local `brand/` assets; move them to the
+Brands repository only if the integration later targets HA Core.
 
 Exit gate: install and upgrade the custom integration through HACS from a tag.
 

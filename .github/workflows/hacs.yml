@@ -24,10 +24,16 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          ignore: brands
 
   hassfest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: home-assistant/actions/hassfest@master
+
+  disposable-ha:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install and upgrade package in disposable Home Assistant
+        run: tests/test_hacs_ha_container.sh
