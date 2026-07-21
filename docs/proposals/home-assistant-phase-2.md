@@ -71,7 +71,7 @@ a TCP listener.
 ## Dynamic tools v1
 
 The integration uses the host-neutral newline-framed
-[dynamic-tools-v1 contract](https://github.com/geisten/geisten/blob/codex/dynamic-tools-v1/docs/proposals/dynamic-tools-v1.md): it sends the complete offered
+[dynamic-tools-v1 contract](https://github.com/geisten/geistlib/blob/codex/dynamic-tools-v1/docs/proposals/dynamic-tools-v1.md): it sends the complete offered
 toolset per conversation and owns execution. This is the only product protocol.
 Frames have explicit size limits and requests have deadlines. Unknown frame
 types, oversized frames, stale exposure versions, and invalid arguments fail

@@ -1,7 +1,7 @@
 # Geist for Home Assistant
 
 Private, local conversation agent for Home Assistant backed by the
-[Geist inference engine](https://github.com/geisten/geisten).
+[Geist inference engine](https://github.com/geisten/geistlib).
 
 This repository owns the Home Assistant product surface: the custom
 integration, exposure and execution policy, diagnostics, installation tooling,

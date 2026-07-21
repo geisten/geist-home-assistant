@@ -2,7 +2,7 @@
 
 ## Ownership boundary
 
-`geisten/geisten` owns inference, model loading, the resident dynamic-tools
+`geisten/geistlib` owns inference, model loading, the resident dynamic-tools
 service, and the normative wire protocol. This repository owns all Home
 Assistant behavior and distribution.
 

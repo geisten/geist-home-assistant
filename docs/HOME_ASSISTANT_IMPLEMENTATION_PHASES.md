@@ -3,7 +3,7 @@
 This is the executable implementation index for the Geist Home Assistant
 product. It contains only adapter, Home Assistant UX, distribution, and product
 evidence work. Inference-engine work and the normative wire protocol belong to
-[`geisten/geisten`](https://github.com/geisten/geisten).
+[`geisten/geistlib`](https://github.com/geisten/geistlib).
 
 ## Product boundary
 
@@ -44,7 +44,7 @@ the HA UI without inspecting daemon logs.
 
 Phases 2 and 3 established the native beta and the host-neutral dynamic-tools
 contract before the repository split. Their normative engine artifacts now live
-in `geisten/geisten`; this plan continues with HA-owned product work.
+in `geisten/geistlib`; this plan continues with HA-owned product work.
 
 ## Phase 4 — HACS integration distribution 🚧
 
@@ -93,7 +93,7 @@ boundary, healthcheck, and build-only CI are already complete.
 P5.1 requires a Geist release implementing `dynamic-tools-v1` for Linux
 `aarch64` and `amd64`. Geist `v0.3.3` predates the protocol and is not a valid
 fallback. See [SUPPLY_CHAIN.md](SUPPLY_CHAIN.md) and
-[geisten/geisten#87](https://github.com/geisten/geisten/issues/87).
+[geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87).
 
 Exit gate: add repository, install app, start it, add the integration, and run
 the first correct request without SSH.
