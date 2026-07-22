@@ -1,6 +1,6 @@
 {
   "protocol": "dynamic-tools-v1",
-  "health_request": {"type": "health", "protocol": "dynamic-tools-v1"},
+  "health_request": {"type": "health"},
   "health_response_required": {
     "type": "health.result",
     "protocol": "dynamic-tools-v1",

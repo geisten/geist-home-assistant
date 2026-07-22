@@ -8,7 +8,7 @@ Do not open public issues for security reports. You should receive an initial
 response within 7 days.
 
 Issues in the inference engine or the normative `dynamic-tools-v1` protocol
-belong to [`geisten/geisten`](https://github.com/geisten/geisten/security).
+belong to [`geisten/geistlib`](https://github.com/geisten/geistlib/security).
 
 ## Supported versions
 

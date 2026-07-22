@@ -2,7 +2,7 @@
 
 ## Ownership boundary
 
-`geisten/geisten` owns inference, model loading, the resident dynamic-tools
+`geisten/geistlib` owns inference, model loading, the resident dynamic-tools
 service, and the normative wire protocol. This repository owns all Home
 Assistant behavior and distribution.
 
@@ -59,10 +59,12 @@ contract suites before either consumer is released.
   protocol id: the engine advertises a `features` capability in
   `health.result`, opted-in requests receive `conversation.delta` frames, and
   the final `conversation.result` stays normative. Engine work:
-  [geisten/geisten#2](https://github.com/geisten/geisten/issues/2); HA work:
+  [geisten/geistlib#116](https://github.com/geisten/geistlib/issues/116); HA work:
   [#17](https://github.com/geisten/geist-home-assistant/issues/17). It is
-  intentionally not part of the first engine release
-  ([geisten/geisten#1](https://github.com/geisten/geisten/issues/1)) that
+  intentionally not part of engine release `v0.4.0`
+  ([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87),
+  tag pending in
+  [geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117)) that
   unblocks P5.1.
 - **`DataUpdateCoordinator` and `entry.runtime_data` are intentionally not
   used.** The integration keeps no `hass.data`, and the single diagnostic

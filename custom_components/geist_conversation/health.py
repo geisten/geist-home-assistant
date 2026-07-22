@@ -8,7 +8,7 @@ import json
 from typing import Any, NamedTuple
 
 PROTOCOL = "dynamic-tools-v1"
-REQUEST = b'{"type":"health","protocol":"dynamic-tools-v1"}\n'
+REQUEST = b'{"type":"health"}\n'  # exact frame; engine matches it byte-for-byte
 MAX_RESPONSE_BYTES = 512
 
 
