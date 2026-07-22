@@ -4,7 +4,7 @@
   "health_response_required": {
     "type": "health.result",
     "protocol": "dynamic-tools-v1",
-    "status": "ok"
+    "status": "ready"
   },
   "conversation_request_required": ["input", "max_tool_steps", "tools"],
   "conversation_result_required": ["conversation.result", "text"]
