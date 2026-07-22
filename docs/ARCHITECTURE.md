@@ -40,3 +40,31 @@ contract suites before either consumer is released.
   Unix socket in the HA config directory.
 - HA OS/Supervised: a protected HA app with an internal-only transport. No host
   ports, HA credentials, Docker socket, host namespaces, or `/config` mount.
+
+## Decisions
+
+- **Native HA LLM API (`homeassistant.helpers.llm`) is deliberately not
+  adopted.** Exposure already delegates to HA's `async_should_expose`; the
+  only duplication is the request-scoped tool build. Adopting `llm.AssistAPI`
+  would trade the enum-constrained entity names and the double validation at
+  the action boundary for HA's broader intent surface. Revisit only if the
+  integration targets HA Core inclusion.
+- **The zero-queue gate stays.** An immediate `busy` is honest for one
+  resident model with worst-case 60 s turns; a queue would silently stall the
+  second speaker instead. Revisit with the P6 latency evidence
+  ([#16](https://github.com/geisten/geist-home-assistant/issues/16)) and the
+  deterministic fast-path
+  ([#14](https://github.com/geisten/geist-home-assistant/issues/14)).
+- **Streaming arrives additively in `dynamic-tools-v1`**, never as a new
+  protocol id: the engine advertises a `features` capability in
+  `health.result`, opted-in requests receive `conversation.delta` frames, and
+  the final `conversation.result` stays normative. Engine work:
+  [geisten/geisten#2](https://github.com/geisten/geisten/issues/2); HA work:
+  [#17](https://github.com/geisten/geist-home-assistant/issues/17). It is
+  intentionally not part of the first engine release
+  ([geisten/geisten#1](https://github.com/geisten/geisten/issues/1)) that
+  unblocks P5.1.
+- **`DataUpdateCoordinator` and `entry.runtime_data` are intentionally not
+  used.** The integration keeps no `hass.data`, and the single diagnostic
+  sensor polls one local health handshake; coordinator plumbing would change
+  no behavior.

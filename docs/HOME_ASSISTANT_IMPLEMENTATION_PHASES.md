@@ -93,7 +93,7 @@ boundary, healthcheck, and build-only CI are already complete.
 P5.1 requires a Geist release implementing `dynamic-tools-v1` for Linux
 `aarch64` and `amd64`. Geist `v0.3.3` predates the protocol and is not a valid
 fallback. See [SUPPLY_CHAIN.md](SUPPLY_CHAIN.md) and
-[geisten/geisten#87](https://github.com/geisten/geisten/issues/87).
+[geisten/geisten#1](https://github.com/geisten/geisten/issues/1).
 
 Exit gate: add repository, install app, start it, add the integration, and run
 the first correct request without SSH.
