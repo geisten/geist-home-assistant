@@ -91,9 +91,12 @@ The protected `aarch64`/`amd64` scaffold, restrictive AppArmor, private runtime
 boundary, healthcheck, and build-only CI are already complete.
 
 P5.1 requires a Geist release implementing `dynamic-tools-v1` for Linux
-`aarch64` and `amd64`. Geist `v0.3.3` predates the protocol and is not a valid
-fallback. See [SUPPLY_CHAIN.md](SUPPLY_CHAIN.md) and
-[geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117).
+`aarch64` and `amd64`. This is satisfied by Geist `v0.4.0`
+([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87),
+release verification
+[geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117));
+older releases predate the protocol and remain invalid inputs. See
+[SUPPLY_CHAIN.md](SUPPLY_CHAIN.md).
 
 Exit gate: add repository, install app, start it, add the integration, and run
 the first correct request without SSH.

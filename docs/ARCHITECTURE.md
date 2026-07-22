@@ -62,9 +62,7 @@ contract suites before either consumer is released.
   [geisten/geistlib#116](https://github.com/geisten/geistlib/issues/116); HA work:
   [#17](https://github.com/geisten/geist-home-assistant/issues/17). It is
   intentionally not part of engine release `v0.4.0`
-  ([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87),
-  tag pending in
-  [geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117)) that
+  ([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87)) that
   unblocks P5.1.
 - **`DataUpdateCoordinator` and `entry.runtime_data` are intentionally not
   used.** The integration keeps no `hass.data`, and the single diagnostic
