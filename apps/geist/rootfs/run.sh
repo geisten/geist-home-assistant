@@ -10,5 +10,7 @@ if [ ! -x "$runtime" ]; then
     exit 1
 fi
 
+# Supervisor mounts /data; create it for by-digest smoke runs outside HA.
+mkdir -p "$(dirname "$socket")"
 rm -f "$socket"
 exec "$runtime" --serve "$socket"
