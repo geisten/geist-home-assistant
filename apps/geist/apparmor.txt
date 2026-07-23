@@ -4,6 +4,8 @@ profile geist flags=(attach_disconnected,mediate_deleted) {
   #include <abstractions/base>
 
   network unix stream,
+  network inet stream,
+  network inet6 stream,
 
   /bin/sh ix,
   /run.sh rix,

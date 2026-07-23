@@ -7,24 +7,30 @@
   },
   "entity": {
     "sensor": {
-      "health": {"name": "Zustand"}
+      "health": {
+        "name": "Zustand"
+      }
     }
   },
   "config": {
     "step": {
       "user": {
         "title": "Mit Geist verbinden",
-        "description": "Verbindet Home Assistant über den privaten Unix-Socket mit dem residenten Geist-Dienst.",
-        "data": {"socket": "Unix-Socket-Pfad"}
+        "description": "Verbindet Home Assistant über den privaten Unix-Socket (Core/Container) oder die interne App-Adresse wie local-geist:8099 (HA OS) mit dem residenten Geist-Dienst.",
+        "data": {
+          "socket": "Adresse (Unix-Socket-Pfad oder App-Host:Port)"
+        }
       },
       "reconfigure": {
         "title": "Geist neu konfigurieren",
-        "description": "Der neue Socket wird geprüft, bevor die Integration neu geladen wird.",
-        "data": {"socket": "Unix-Socket-Pfad"}
+        "description": "Die neue Adresse wird geprüft, bevor die Integration neu geladen wird.",
+        "data": {
+          "socket": "Adresse (Unix-Socket-Pfad oder App-Host:Port)"
+        }
       }
     },
     "error": {
-      "invalid_socket": "Gib einen absoluten Unix-Socket-Pfad ein.",
+      "invalid_socket": "Gib einen absoluten Unix-Socket-Pfad oder eine interne Host:Port-Adresse ein.",
       "cannot_connect": "Der Geist-Dienst ist nicht erreichbar.",
       "timeout": "Der Geist-Dienst hat nicht rechtzeitig geantwortet.",
       "invalid_response": "Der Dienst hat eine ungültige Health-Antwort geliefert.",

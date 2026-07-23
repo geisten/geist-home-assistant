@@ -7,24 +7,30 @@
   },
   "entity": {
     "sensor": {
-      "health": {"name": "Health"}
+      "health": {
+        "name": "Health"
+      }
     }
   },
   "config": {
     "step": {
       "user": {
         "title": "Connect to Geist",
-        "description": "Connect to the resident Geist service over its private Unix socket.",
-        "data": {"socket": "Unix socket path"}
+        "description": "Connect to the resident Geist service over its private Unix socket (Core/Container) or the internal app address like local-geist:8099 (HA OS).",
+        "data": {
+          "socket": "Address (Unix socket path or app host:port)"
+        }
       },
       "reconfigure": {
         "title": "Reconfigure Geist",
-        "description": "The new socket is validated before the integration is reloaded.",
-        "data": {"socket": "Unix socket path"}
+        "description": "The new address is validated before the integration is reloaded.",
+        "data": {
+          "socket": "Address (Unix socket path or app host:port)"
+        }
       }
     },
     "error": {
-      "invalid_socket": "Enter an absolute Unix socket path.",
+      "invalid_socket": "Enter an absolute Unix socket path or an internal host:port address.",
       "cannot_connect": "Cannot connect to the Geist service.",
       "timeout": "The Geist service did not respond in time.",
       "invalid_response": "The service returned an invalid health response.",

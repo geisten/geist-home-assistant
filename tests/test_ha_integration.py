@@ -31,6 +31,7 @@ def main() -> None:
         "manifest.json",
         "policy.py",
         "sensor.py",
+        "transport.py",
         "strings.json",
         "exposure.py",
     }

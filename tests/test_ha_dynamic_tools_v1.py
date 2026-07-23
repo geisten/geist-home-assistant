@@ -27,6 +27,7 @@ def load(name: str):
 
 
 policy = load("policy")
+transport = load("transport")
 dynamic = load("dynamic_tools_v1")
 session = load("dynamic_session_v1")
 
@@ -193,8 +194,8 @@ async def checks() -> None:
             raise ConnectionRefusedError()
         return Reader([{"type": "conversation.result", "text": "ready"}]), Writer()
 
-    original_open = session.asyncio.open_unix_connection
-    session.asyncio.open_unix_connection = fresh_connection
+    original_open = transport.asyncio.open_unix_connection
+    transport.asyncio.open_unix_connection = fresh_connection
     try:
         try:
             await session.async_ask_geist_dynamic(
@@ -206,7 +207,7 @@ async def checks() -> None:
         answer = await session.async_ask_geist_dynamic(
             "/config/geist.sock", "second", exposure, Executor(), timeout_s=1)
     finally:
-        session.asyncio.open_unix_connection = original_open
+        transport.asyncio.open_unix_connection = original_open
     assert opens == 2 and answer == "ready"
 
 

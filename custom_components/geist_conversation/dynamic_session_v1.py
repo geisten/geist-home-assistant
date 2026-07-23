@@ -8,6 +8,7 @@ from typing import Any
 
 from .dynamic_tools_v1 import async_handle_dynamic_tool_call, build_dynamic_tools
 from .policy import ExposureStore, PolicyError
+from .transport import open_transport
 
 
 class ProtocolError(ValueError):
@@ -125,7 +126,7 @@ async def async_dynamic_session(
 
 
 async def async_ask_geist_dynamic(
-    socket_path: str,
+    address: str,
     utterance: str,
     exposure: ExposureStore,
     executor: Any,
@@ -136,7 +137,7 @@ async def async_ask_geist_dynamic(
     language: str = "",
     context: str = "",
 ) -> str:
-    reader, writer = await asyncio.open_unix_connection(socket_path)
+    reader, writer = await open_transport(address)
     try:
         return await async_dynamic_session(reader, writer, utterance, exposure, executor,
                                            timeout_s=timeout_s, max_tool_steps=max_tool_steps,

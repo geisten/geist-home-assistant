@@ -31,8 +31,10 @@ assert "HEALTHCHECK" in dockerfile and "EXPOSE" not in dockerfile
 assert 'io.hass.arch="${BUILD_ARCH}"' in dockerfile
 assert "/usr/bin/geist" in run and "--serve" in run
 assert "GEIST_HA_" not in run and "http" not in run.lower()
-assert 'UNIX-CONNECT:/data/geist.sock' in health
+assert "TCP-LISTEN:8099,fork,reuseaddr UNIX-CONNECT:" in run
+assert 'TCP:127.0.0.1:8099' in health
 assert '"type":"health"' in health and '"protocol":"dynamic-tools-v1"' in health
+assert "network inet stream" in apparmor and "network inet6 stream" in apparmor
 assert "/data/** rwk" in apparmor
 assert "deny /config/**" in apparmor and "deny /run/docker.sock" in apparmor
 assert "linux/arm64" in workflow and "linux/amd64" in workflow

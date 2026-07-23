@@ -35,6 +35,7 @@ def load(name: str):
     return module
 
 
+transport = load("transport")
 health = load("health")
 policy = load("policy")
 session = load("dynamic_session_v1")
@@ -74,7 +75,7 @@ async def check_health() -> None:
     async def connect(_path: str):
         return Reader([contract["health_response_required"]]), writer
 
-    health.asyncio.open_unix_connection = connect
+    transport.asyncio.open_unix_connection = connect
     result = await health.async_validate_health("/config/geist.sock", 0.1)
     assert writer.frames == [contract["health_request"]], writer.frames
     assert result.protocol == contract["protocol"]
