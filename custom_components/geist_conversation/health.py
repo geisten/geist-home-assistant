@@ -7,6 +7,8 @@ from contextlib import suppress
 import json
 from typing import Any, NamedTuple
 
+from .transport import open_transport, parse_address
+
 PROTOCOL = "dynamic-tools-v1"
 REQUEST = b'{"type":"health"}\n'  # exact frame; engine matches it byte-for-byte
 MAX_RESPONSE_BYTES = 512
@@ -25,14 +27,16 @@ class HealthError(ValueError):
         self.code = code
 
 
-async def async_validate_health(socket_path: str, timeout_s: float) -> HealthResult:
-    """Require a ready dynamic-tools-v1 daemon at ``socket_path``."""
-    if not isinstance(socket_path, str) or not socket_path.startswith("/"):
-        raise HealthError("invalid_socket")
+async def async_validate_health(address: str, timeout_s: float) -> HealthResult:
+    """Require a ready dynamic-tools-v1 daemon at ``address`` (socket or host:port)."""
+    try:
+        parse_address(address)
+    except ValueError as err:
+        raise HealthError("invalid_socket") from err
     writer: Any | None = None
     try:
         async with asyncio.timeout(timeout_s):
-            reader, writer = await asyncio.open_unix_connection(socket_path)
+            reader, writer = await open_transport(address)
             writer.write(REQUEST)
             await writer.drain()
             line = await reader.readline()

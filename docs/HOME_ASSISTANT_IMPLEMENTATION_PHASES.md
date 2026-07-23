@@ -82,12 +82,16 @@ Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assi
 1. ✅ [P5.1 Runtime-Lock and verification #3](https://github.com/geisten/geist-home-assistant/issues/3)
    — delivered: committed lock on geistlib `v0.4.0`, fail-closed verify
    script, model-free negative fixtures, verified materialization in CI.
-2. [P5.2 Signed multi-arch images #4](https://github.com/geisten/geist-home-assistant/issues/4)
-   — publish workflow implemented (`release-app.yml`: guard, per-arch
-   build/push with SBOM and provenance, pull-by-digest smoke, keyless
-   cosign, generic manifest, release notes); slice closes with the first
-   green `app-v*` tag run.
+2. ✅ [P5.2 Signed multi-arch images #4](https://github.com/geisten/geist-home-assistant/issues/4)
+   — delivered: `release-app.yml` published
+   [app-v0.1.0](https://github.com/geisten/geist-home-assistant/releases/tag/app-v0.1.0)
+   with signed per-arch digests, SBOM/provenance attestations, generic
+   manifest, and pull-by-digest smokes on both architectures.
 3. [P5.3 Private app transport and Config Flow #5](https://github.com/geisten/geist-home-assistant/issues/5)
+   — implemented: fail-closed address parsing (Unix path or internal
+   `host:port`), socat bridge on container port 8099 without a host port,
+   healthcheck through the bridge, golden unix+tcp contract tests; HA-OS
+   end-to-end evidence lands with P5.7.
 4. [P5.4 Resource preflight and resident runtime lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
 5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
 6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)

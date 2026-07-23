@@ -13,4 +13,8 @@ fi
 # Supervisor mounts /data; create it for by-digest smoke runs outside HA.
 mkdir -p "$(dirname "$socket")"
 rm -f "$socket"
+# Private app transport: bridge the container-internal port 8099 to the
+# runtime socket. No host port is mapped (config.yaml ports: {}); only
+# containers on the internal network — HA Core — can reach it.
+socat TCP-LISTEN:8099,fork,reuseaddr UNIX-CONNECT:"$socket" &
 exec "$runtime" --serve "$socket"
