@@ -8,6 +8,7 @@ test:
 	@python3 tests/test_ha_transport.py
 	@python3 tests/test_ha_preflight.py
 	@python3 tests/test_ha_chaos.py
+	@python3 tests/test_ha_lifecycle.py
 	@python3 tests/test_ha_history.py
 	@python3 tests/test_ha_operability.py
 	@python3 tests/test_ha_dynamic_tools_v1.py

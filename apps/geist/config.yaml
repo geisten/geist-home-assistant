@@ -11,6 +11,8 @@ startup: application
 boot: auto
 init: false
 watchdog: "tcp://[HOST]:[PORT:8099]"
+backup_exclude:
+  - "*"
 apparmor: true
 host_network: false
 host_ipc: false

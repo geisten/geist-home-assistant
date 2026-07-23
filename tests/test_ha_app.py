@@ -21,6 +21,7 @@ assert config["slug"] == "geist"
 assert config["arch"] == ["aarch64", "amd64"]
 assert config["apparmor"] is True and config["init"] is False
 assert config["watchdog"] == "tcp://[HOST]:[PORT:8099]"
+assert config["backup_exclude"] == ["*"], "stateless /data stays out of backups"
 assert config["map"] == [] and config["ports"] == {}
 for key in ("host_network", "host_ipc", "host_dbus", "host_pid", "host_uts",
             "hassio_api", "homeassistant_api", "docker_api", "full_access",

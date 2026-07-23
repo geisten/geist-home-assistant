@@ -104,6 +104,10 @@ Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assi
    interruption, invalid health frame, no-replay, deduplicated Repair,
    recovery).
 6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
+   — implemented: /data fully excluded from backups (stateless pre-1.0),
+   stale-state upgrade/rollback lifecycle test, protocol gate keeps a
+   non-dynamic-tools runtime from ever looking healthy, compatibility
+   matrix seeded for P4.3.
 7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
 
 The protected `aarch64`/`amd64` scaffold, restrictive AppArmor, private runtime
