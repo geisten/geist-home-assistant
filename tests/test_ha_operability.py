@@ -19,6 +19,7 @@ assert "history" not in diagnostics and "context" not in diagnostics
 assert '"socket"' not in diagnostics
 assert '"runtime_health"' in strings and "{error}" in strings
 assert "RequestGate" in conversation and "status=busy" in conversation
-assert "status=%s duration_ms=%d" in conversation
+assert "status=%s duration_ms=%d instance=%s" in conversation
+assert conversation.count("instance=%s") == 5, "every request log carries the instance id"
 assert "geist daemon unreachable" not in conversation
 print("ha_operability: health entity + Repairs + redacted diagnostics contract pass")

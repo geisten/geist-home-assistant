@@ -61,7 +61,7 @@ class GeistConversationEntity(conversation.ConversationEntity):
         try:
             self._gate.enter()
         except ProtocolError:
-            _LOGGER.info("geist_request status=busy duration_ms=0")
+            _LOGGER.info("geist_request status=busy duration_ms=0 instance=%s", self._attr_unique_id)
             response.async_set_error(
                 intent.IntentResponseErrorCode.UNKNOWN,
                 "Geist is busy. Try again shortly.",
@@ -82,16 +82,18 @@ class GeistConversationEntity(conversation.ConversationEntity):
             )
         except asyncio.CancelledError:
             _LOGGER.info(
-                "geist_request status=client_cancelled duration_ms=%d",
+                "geist_request status=client_cancelled duration_ms=%d instance=%s",
                 int((monotonic() - started) * 1000),
+                self._attr_unique_id,
             )
             raise
         except OSError:
             code = "cannot_connect"
             _LOGGER.warning(
-                "geist_request status=%s duration_ms=%d",
+                "geist_request status=%s duration_ms=%d instance=%s",
                 code,
                 int((monotonic() - started) * 1000),
+                self._attr_unique_id,
             )
             response.async_set_error(
                 intent.IntentResponseErrorCode.UNKNOWN,
@@ -102,9 +104,10 @@ class GeistConversationEntity(conversation.ConversationEntity):
             )
         except ProtocolError as err:
             _LOGGER.warning(
-                "geist_request status=%s duration_ms=%d",
+                "geist_request status=%s duration_ms=%d instance=%s",
                 err.code,
                 int((monotonic() - started) * 1000),
+                self._attr_unique_id,
             )
             response.async_set_error(
                 intent.IntentResponseErrorCode.UNKNOWN,
@@ -116,8 +119,9 @@ class GeistConversationEntity(conversation.ConversationEntity):
         finally:
             self._gate.leave()
         _LOGGER.info(
-            "geist_request status=ok duration_ms=%d",
+            "geist_request status=ok duration_ms=%d instance=%s",
             int((monotonic() - started) * 1000),
+            self._attr_unique_id,
         )
         response.async_set_speech(answer or "(keine Antwort)")
         self._history.add(conversation_id, user_input.text, answer)

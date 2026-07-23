@@ -98,6 +98,11 @@ Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assi
    model-free negative fixtures; residency evidence under load lands
    with P5.7.
 5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
+   — implemented: Supervisor tcp watchdog (bounded by its restart
+   throttle), readiness/liveness split documented, stable instance id in
+   request logs, model-free chaos suite (runtime death, transport
+   interruption, invalid health frame, no-replay, deduplicated Repair,
+   recovery).
 6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
 7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
 
