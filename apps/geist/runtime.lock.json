@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "release": "v0.4.0",
+  "protocol": "dynamic-tools-v1",
+  "version_output": "geist 0.4.0",
+  "assets": {
+    "aarch64": {
+      "url": "https://github.com/geisten/geistlib/releases/download/v0.4.0/geist-bitnet-linux-arm64.tar.gz",
+      "sha256": "9ed86d261a845e11831ef93c52b411973b087d8e7fa19b32fb3ea7c538cac49d",
+      "member": "geist-bitnet-linux-arm64/geist-bitnet"
+    },
+    "amd64": {
+      "url": "https://github.com/geisten/geistlib/releases/download/v0.4.0/geist-bitnet-linux-x86_64.tar.gz",
+      "sha256": "f9f99230e7d5b740a667a23ddb035349091381caa02d4bf6617081ac14332ea9",
+      "member": "geist-bitnet-linux-x86_64/geist-bitnet"
+    }
+  }
+}

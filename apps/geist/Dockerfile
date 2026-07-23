@@ -6,7 +6,10 @@ ARG BUILD_VERSION=0.1.0
 RUN apk add --no-cache socat
 
 COPY rootfs /
-RUN chmod 0755 /run.sh /healthcheck.sh
+# Materialized and verified by scripts/verify-runtime-lock.sh before the
+# build; the build itself performs no network access for the runtime.
+COPY build/${BUILD_ARCH}/geist /usr/bin/geist
+RUN chmod 0755 /run.sh /healthcheck.sh /usr/bin/geist
 
 LABEL \
     io.hass.version="${BUILD_VERSION}" \

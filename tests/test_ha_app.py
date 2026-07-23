@@ -37,4 +37,7 @@ assert "/data/** rwk" in apparmor
 assert "deny /config/**" in apparmor and "deny /run/docker.sock" in apparmor
 assert "linux/arm64" in workflow and "linux/amd64" in workflow
 assert "push: false" in workflow and "docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8" in workflow
+assert "verify-runtime-lock.sh" in workflow and "test_runtime_lock.py" in workflow
+assert 'COPY build/${BUILD_ARCH}/geist /usr/bin/geist' in dockerfile
+assert "/usr/bin/geist rix" in apparmor
 print("ha_app: multi-arch protected scaffold + private data/health boundary pass")

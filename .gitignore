@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 geist-home-soak.json
 dist/
+apps/geist/build/
