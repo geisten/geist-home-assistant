@@ -79,16 +79,22 @@ publish redacted evidence for the tested compatibility matrix.
 
 Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assistant/issues/2).
 
-1. [P5.1 Runtime-Lock and verification #3](https://github.com/geisten/geist-home-assistant/issues/3)
+1. ✅ [P5.1 Runtime-Lock and verification #3](https://github.com/geisten/geist-home-assistant/issues/3)
+   — delivered: committed lock on geistlib `v0.4.0`, fail-closed verify
+   script, model-free negative fixtures, verified materialization in CI.
 2. [P5.2 Signed multi-arch images #4](https://github.com/geisten/geist-home-assistant/issues/4)
+   — publish workflow implemented (`release-app.yml`: guard, per-arch
+   build/push with SBOM and provenance, pull-by-digest smoke, keyless
+   cosign, generic manifest, release notes); slice closes with the first
+   green `app-v*` tag run.
 3. [P5.3 Private app transport and Config Flow #5](https://github.com/geisten/geist-home-assistant/issues/5)
-4. [P5.4 Model/cache/resource lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
+4. [P5.4 Resource preflight and resident runtime lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
 5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
-6. [P5.6 Backup, upgrade and rollback #8](https://github.com/geisten/geist-home-assistant/issues/8)
+6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
 7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
 
 The protected `aarch64`/`amd64` scaffold, restrictive AppArmor, private runtime
-boundary, healthcheck, and build-only CI are already complete.
+boundary, healthcheck, and verified-input CI are already complete.
 
 P5.1 requires a Geist release implementing `dynamic-tools-v1` for Linux
 `aarch64` and `amd64`. This is satisfied by Geist `v0.4.0`
