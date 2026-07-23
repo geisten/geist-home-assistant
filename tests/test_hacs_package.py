@@ -26,7 +26,7 @@ for key in ("domain", "name", "version", "documentation", "issue_tracker",
     assert key in manifest, key
 assert manifest["domain"] == COMPONENT.name
 assert manifest["integration_type"] == "service"
-assert manifest["version"] == "0.1.0-beta.1"
+assert manifest["version"] == "0.1.0-beta.2"
 assert (COMPONENT / "brand/icon.png").is_file()
 assert (COMPONENT / "brand/icon@2x.png").is_file()
 
