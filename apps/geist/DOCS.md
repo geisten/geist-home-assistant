@@ -57,3 +57,24 @@ Requests are never silently retried across a restart: an interrupted request
 surfaces one correlated error in Home Assistant, mutating tool calls are not
 replayed, and the zero-queue busy semantics resume unchanged with the fresh
 process.
+
+## Backup, upgrade and rollback
+
+The app keeps **no persistent data pre-1.0**: `/data` holds only the
+ephemeral runtime socket and is fully excluded from Home Assistant backups
+(`backup_exclude: ["*"]`). Restoring a backup on a clean instance restores
+the integration's Config Entry through Home Assistant itself; reinstalling
+the app is all that is needed on the app side. Upgrades and rollbacks are
+plain image swaps with no data migrations: the only state a previous
+version can leave behind is a stale socket, which every start removes, and
+a runtime that does not answer the exact `dynamic-tools-v1` ready frame
+never becomes healthy.
+
+## Compatibility
+
+| App | Integration | Protocol | Engine release |
+|---|---|---|---|
+| 0.1.0 | ≥ 0.1.0-beta.1 | `dynamic-tools-v1` | geistlib `v0.4.0` (locked) |
+
+The release policy and the full matrix are formalized in P4.3
+([#13](https://github.com/geisten/geist-home-assistant/issues/13)).
