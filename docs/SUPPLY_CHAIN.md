@@ -15,14 +15,35 @@ manifest tag must match. CI builds `aarch64` and `amd64`, attaches an SBOM and
 provenance, signs images with GitHub OIDC/Cosign, then pulls each published
 digest and runs the healthcheck through emulation or native runners.
 
-## Current gate
+## Runtime lock
 
-The newest published Geist release is `v0.4.0`. It implements
-`dynamic-tools-v1` for Linux `aarch64` and `x86_64` with published SHA-256
-digests ([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87),
+`apps/geist/runtime.lock.json` pins the embedded-model runtime
+(`geist-bitnet`) of Geist `v0.4.0`
+([geisten/geistlib#87](https://github.com/geisten/geistlib/issues/87),
 release verification
-[geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117)).
-Releases `v0.3.3` and older predate the protocol and remain rejected as HA
-app inputs. No mutable or incompatible fallback is permitted. P5.1 pins this
-release in the runtime lock; HA work is tracked in
-[Phase 5 epic #2](https://github.com/geisten/geist-home-assistant/issues/2).
+[geisten/geistlib#117](https://github.com/geisten/geistlib/issues/117)) for
+both architectures. `scripts/verify-runtime-lock.sh ARCH` downloads the
+locked asset, checks the SHA-256 before extraction, rejects traversal and
+unexpected archive entries, and materializes `apps/geist/build/ARCH/geist`
+for the image build, which performs no further network access for the
+runtime. `--exec` compares `geist --version` against the lock; `--handshake`
+requires the exact `dynamic-tools-v1` health frame. Releases `v0.3.3` and
+older predate the protocol and remain rejected. Negative fixtures run in
+`make test` (`tests/test_runtime_lock.py`) without any model download.
+
+## Lock update process
+
+One PR per engine release, touching `apps/geist/runtime.lock.json` only:
+
+1. Set `release` to the exact new tag and update both asset URLs to it.
+2. Copy the digests from the release `SHA256SUMS`, then verify them
+   independently: download both assets and compare `sha256`.
+3. Set `version_output` to the exact `geist --version` line.
+4. Run `make test` and `scripts/verify-runtime-lock.sh` for both
+   architectures locally or let the app workflow do it.
+
+Review checklist: tag is exact (`vX.Y.Z`, never `latest`); both URLs point
+at that tag on `geisten/geistlib`; digests match the independently computed
+values; `version_output` matches the binary; the app workflow (negative
+fixtures, verify with `--exec --handshake`, image build) is green for both
+architectures.

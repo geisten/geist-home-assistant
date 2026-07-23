@@ -31,6 +31,12 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Run negative runtime-lock fixtures
+        run: python3 tests/test_runtime_lock.py
+      - name: Materialize and verify locked Geist runtime
+        # aarch64 --exec/--handshake run through the qemu binfmt set up above,
+        # mirroring the engine release smoke; amd64 runs natively.
+        run: scripts/verify-runtime-lock.sh ${{ matrix.arch }} --exec --handshake
       - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
         with:
           context: apps/geist
