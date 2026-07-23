@@ -61,7 +61,15 @@ Published: `v0.1.0-beta.1` with a validated `geist_conversation.zip` asset.
 
 Remaining executable slices:
 
-1. [P4.1 real HACS UI clean install #10](https://github.com/geisten/geist-home-assistant/issues/10)
+1. ✅ [P4.1 real HACS UI clean install #10](https://github.com/geisten/geist-home-assistant/issues/10)
+   — delivered: real-UI clean install of `v0.1.0-beta.1` on HA 2026.7.3 /
+   HACS 2.0.5, error-free restart, localized config-flow health error;
+   evidence in
+   [benchmarks/hacs-clean-install-20260723.md](benchmarks/hacs-clean-install-20260723.md).
+   Finding for P4.3: HACS defaults to the newest non-prerelease tag, which
+   is the Phase-5 `app-v*` release — the release policy must keep
+   integration releases selectable as default (e.g. publish app releases
+   with `--latest=false`).
 2. [P4.2 second beta and real N-1 to N upgrade #12](https://github.com/geisten/geist-home-assistant/issues/12)
 3. [P4.3 compatibility matrix and release policy #13](https://github.com/geisten/geist-home-assistant/issues/13)
 
