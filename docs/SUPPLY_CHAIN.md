@@ -31,6 +31,26 @@ requires the exact `dynamic-tools-v1` health frame. Releases `v0.3.3` and
 older predate the protocol and remain rejected. Negative fixtures run in
 `make test` (`tests/test_runtime_lock.py`) without any model download.
 
+## App publishing
+
+Pushing a tag `app-vX.Y.Z` runs `.github/workflows/release-app.yml`: a guard
+job requires the tag to equal the `apps/geist/config.yaml` version and the
+image to be `ghcr.io/geisten/geist-home-assistant-{arch}`. Each architecture
+then re-runs the negative lock fixtures, materializes and verifies the locked
+runtime (`--exec --handshake`), builds and pushes its image with BuildKit
+provenance (`mode=max`) and SBOM attestations, smokes the image pulled by
+digest until the container healthcheck passes, and cosign-signs the digest
+keyless via GitHub OIDC. The generic multi-arch manifest and the GitHub
+release (digest table plus verification commands) are published only after
+both architecture smokes and signatures succeed. Verify any published digest
+with:
+
+```sh
+cosign verify ghcr.io/geisten/geist-home-assistant@<digest> \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp '^https://github.com/geisten/geist-home-assistant/'
+```
+
 ## Lock update process
 
 One PR per engine release, touching `apps/geist/runtime.lock.json` only:

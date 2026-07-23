@@ -1,0 +1,191 @@
+name: Release Home Assistant app
+
+# P5.2: publish signed multi-arch app images from immutable P5.1 inputs.
+# Per-arch images are built from the verified runtime lock, pushed, smoked
+# by digest, and cosign-signed; the generic manifest and the GitHub release
+# are only published after both architecture smokes pass.
+
+on:
+  push:
+    tags:
+      - "app-v*"
+
+permissions: {}
+
+env:
+  IMAGE_BASE: ghcr.io/geisten/geist-home-assistant
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Verify tag matches app config
+        id: version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version=$(awk '$1 == "version:" {print $2}' apps/geist/config.yaml)
+          test "$TAG" = "app-v$version"
+          grep -qx 'image: ghcr.io/geisten/geist-home-assistant-{arch}' apps/geist/config.yaml
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: guard
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: aarch64
+            platform: linux/arm64
+          - arch: amd64
+            platform: linux/amd64
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run negative runtime-lock fixtures
+        run: python3 tests/test_runtime_lock.py
+      - name: Materialize and verify locked Geist runtime
+        run: scripts/verify-runtime-lock.sh ${{ matrix.arch }} --exec --handshake
+      - name: Build and push architecture image
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: apps/geist
+          platforms: ${{ matrix.platform }}
+          push: true
+          provenance: mode=max
+          sbom: true
+          tags: ${{ env.IMAGE_BASE }}-${{ matrix.arch }}:${{ needs.guard.outputs.version }}
+          build-args: |
+            BUILD_ARCH=${{ matrix.arch }}
+            BUILD_VERSION=${{ needs.guard.outputs.version }}
+      - name: Smoke pulled-by-digest image
+        env:
+          REF: ${{ env.IMAGE_BASE }}-${{ matrix.arch }}@${{ steps.build.outputs.digest }}
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          docker pull --platform "$PLATFORM" "$REF"
+          container=$(docker run -d --platform "$PLATFORM" \
+            --health-start-period=600s --health-interval=15s \
+            --health-timeout=10s --health-retries=5 "$REF")
+          deadline=$((SECONDS + 900))
+          while :; do
+            status=$(docker inspect --format '{{.State.Health.Status}}' "$container")
+            running=$(docker inspect --format '{{.State.Running}}' "$container")
+            echo "smoke: status=$status running=$running"
+            [ "$status" = healthy ] && break
+            if [ "$running" != true ] || [ "$SECONDS" -ge "$deadline" ]; then
+              docker logs "$container" || true
+              exit 1
+            fi
+            sleep 10
+          done
+          docker rm -f "$container"
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Sign architecture image
+        env:
+          REF: ${{ env.IMAGE_BASE }}-${{ matrix.arch }}@${{ steps.build.outputs.digest }}
+        run: cosign sign --yes "$REF"
+      - name: Record digest
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          mkdir -p digests
+          echo "$DIGEST" > "digests/${{ matrix.arch }}"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: digest-${{ matrix.arch }}
+          path: digests/${{ matrix.arch }}
+
+  publish:
+    needs: [guard, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          pattern: digest-*
+          merge-multiple: true
+          path: digests
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+      - name: Create, sign, and verify generic manifest
+        id: manifest
+        env:
+          VERSION: ${{ needs.guard.outputs.version }}
+        run: |
+          arm64=$(cat digests/aarch64)
+          amd64=$(cat digests/amd64)
+          docker buildx imagetools create -t "$IMAGE_BASE:$VERSION" \
+            "$IMAGE_BASE-aarch64@$arm64" "$IMAGE_BASE-amd64@$amd64"
+          manifest=$(docker buildx imagetools inspect "$IMAGE_BASE:$VERSION" \
+            --format '{{json .Manifest.Digest}}' | tr -d '"')
+          cosign sign --yes "$IMAGE_BASE@$manifest"
+          for ref in "$IMAGE_BASE@$manifest" "$IMAGE_BASE-aarch64@$arm64" "$IMAGE_BASE-amd64@$amd64"; do
+            cosign verify "$ref" \
+              --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+              --certificate-identity-regexp '^https://github.com/geisten/geist-home-assistant/'
+          done
+          docker buildx imagetools inspect "$IMAGE_BASE:$VERSION"
+          {
+            echo "manifest=$manifest"
+            echo "arm64=$arm64"
+            echo "amd64=$amd64"
+          } >> "$GITHUB_OUTPUT"
+      - name: Publish GitHub release with digests
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.guard.outputs.version }}
+          MANIFEST: ${{ steps.manifest.outputs.manifest }}
+          ARM64: ${{ steps.manifest.outputs.arm64 }}
+          AMD64: ${{ steps.manifest.outputs.amd64 }}
+        run: |
+          cat > notes.md <<EOF
+          Signed multi-arch Home Assistant app images for \`$VERSION\`,
+          built from the verified runtime lock (\`apps/geist/runtime.lock.json\`).
+
+          | Image | Digest |
+          |---|---|
+          | \`$IMAGE_BASE:$VERSION\` | \`$MANIFEST\` |
+          | \`$IMAGE_BASE-aarch64:$VERSION\` | \`$ARM64\` |
+          | \`$IMAGE_BASE-amd64:$VERSION\` | \`$AMD64\` |
+
+          Verify signature and provenance:
+
+          \`\`\`sh
+          cosign verify "$IMAGE_BASE@$MANIFEST" \\
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com \\
+            --certificate-identity-regexp '^https://github.com/geisten/geist-home-assistant/'
+          docker buildx imagetools inspect "$IMAGE_BASE:$VERSION"
+          \`\`\`
+
+          SBOM and provenance are attached as BuildKit attestations on each
+          architecture digest.
+          EOF
+          gh release create "$GITHUB_REF_NAME" --title "HA app $VERSION" \
+            --notes-file notes.md --verify-tag

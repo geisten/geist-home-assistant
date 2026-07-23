@@ -40,4 +40,13 @@ assert "push: false" in workflow and "docker/build-push-action@10e90e3645eae34f1
 assert "verify-runtime-lock.sh" in workflow and "test_runtime_lock.py" in workflow
 assert 'COPY build/${BUILD_ARCH}/geist /usr/bin/geist' in dockerfile
 assert "/usr/bin/geist rix" in apparmor
+
+release = (ROOT / ".github/workflows/release-app.yml").read_text()
+assert '"app-v*"' in release and 'test "$TAG" = "app-v$version"' in release
+assert "verify-runtime-lock.sh" in release and "test_runtime_lock.py" in release
+assert "provenance: mode=max" in release and "sbom: true" in release
+assert "cosign sign --yes" in release and "cosign verify" in release
+assert "id-token: write" in release and "permissions: {}" in release
+assert "--certificate-oidc-issuer https://token.actions.githubusercontent.com" in release
+assert ":latest" not in release
 print("ha_app: multi-arch protected scaffold + private data/health boundary pass")
