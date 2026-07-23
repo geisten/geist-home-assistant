@@ -11,6 +11,18 @@ The runtime binary is materialized at image-build time from the committed
 before extraction (see `docs/SUPPLY_CHAIN.md`). Published images are
 cosign-signed with SBOM and provenance attestations.
 
+## Requirements
+
+Supported architectures are `aarch64` and `amd64`; the start preflight
+refuses a mismatched host before the runtime loads. It also requires about
+1.5 GiB of available RAM for the embedded model and a little free space on
+`/data`, and stops with a single structured error (`status=insufficient_ram`
+/ `status=insufficient_disk` / `status=arch_mismatch`) instead of
+crash-looping. The thresholds can be tuned via the `GEIST_MIN_RAM_MB` and
+`GEIST_MIN_DISK_MB` environment variables. The runtime is started exactly
+once per container lifetime and keeps the model resident; requests never
+trigger a reload.
+
 ## Transport
 
 The runtime serves `dynamic-tools-v1` on `/data/geist.sock`. A socat bridge

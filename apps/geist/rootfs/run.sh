@@ -12,6 +12,7 @@ fi
 
 # Supervisor mounts /data; create it for by-digest smoke runs outside HA.
 mkdir -p "$(dirname "$socket")"
+/preflight.sh
 rm -f "$socket"
 # Private app transport: bridge the container-internal port 8099 to the
 # runtime socket. No host port is mapped (config.yaml ports: {}); only

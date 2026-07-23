@@ -32,6 +32,12 @@ assert 'io.hass.arch="${BUILD_ARCH}"' in dockerfile
 assert "/usr/bin/geist" in run and "--serve" in run
 assert "GEIST_HA_" not in run and "http" not in run.lower()
 assert "TCP-LISTEN:8099,fork,reuseaddr UNIX-CONNECT:" in run
+assert "/preflight.sh" in run
+preflight = (APP / "rootfs/preflight.sh").read_text()
+assert "status=arch_mismatch" in preflight and "status=insufficient_ram" in preflight
+assert "status=insufficient_disk" in preflight and "MemAvailable" in preflight
+assert 'ENV GEIST_BUILD_ARCH=${BUILD_ARCH}' in dockerfile and "/preflight.sh" in dockerfile
+assert "/preflight.sh rix" in apparmor
 assert 'TCP:127.0.0.1:8099' in health
 assert '"type":"health"' in health and '"protocol":"dynamic-tools-v1"' in health
 assert "network inet stream" in apparmor and "network inet6 stream" in apparmor
