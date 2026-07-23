@@ -38,5 +38,22 @@ In the `geist_conversation` config flow, enter the app's internal address
 (Settings → Add-ons → Geist). On Core/Container installations without the
 app, keep using the absolute Unix-socket path of a host-resident daemon.
 
-The container healthcheck sends the model-free health frame through the TCP
-bridge, so a dead bridge or a dead runtime both mark the app unhealthy.
+## Health, watchdog and recovery
+
+Readiness and liveness are separate signals:
+
+- **Readiness** is the model-free `dynamic-tools-v1` health frame. The
+  container healthcheck sends it through the TCP bridge every 30 s (5 s
+  timeout, 3 retries), so a dead bridge or a dead runtime both mark the app
+  unhealthy; the integration polls the same frame every 30 s and raises one
+  deduplicated Repair per instance, removed automatically on recovery.
+- **Liveness** is the Supervisor watchdog (`tcp://[HOST]:8099`): if the
+  bridge stops accepting, the Supervisor restarts the app. Its built-in
+  restart throttling bounds the retry rate, so a permanently broken host
+  cannot loop forever, and preflight failures stop deterministically with a
+  single structured status line before the model loads.
+
+Requests are never silently retried across a restart: an interrupted request
+surfaces one correlated error in Home Assistant, mutating tool calls are not
+replayed, and the zero-queue busy semantics resume unchanged with the fresh
+process.
