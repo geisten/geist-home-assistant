@@ -9,7 +9,8 @@ COPY rootfs /
 # Materialized and verified by scripts/verify-runtime-lock.sh before the
 # build; the build itself performs no network access for the runtime.
 COPY build/${BUILD_ARCH}/geist /usr/bin/geist
-RUN chmod 0755 /run.sh /healthcheck.sh /usr/bin/geist
+RUN chmod 0755 /run.sh /healthcheck.sh /preflight.sh /usr/bin/geist
+ENV GEIST_BUILD_ARCH=${BUILD_ARCH}
 
 LABEL \
     io.hass.version="${BUILD_VERSION}" \

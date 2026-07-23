@@ -93,6 +93,10 @@ Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assi
    healthcheck through the bridge, golden unix+tcp contract tests; HA-OS
    end-to-end evidence lands with P5.7.
 4. [P5.4 Resource preflight and resident runtime lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
+   — implemented: arch/RAM/disk preflight with structured fail-closed
+   status lines and tunable thresholds, single resident runtime start,
+   model-free negative fixtures; residency evidence under load lands
+   with P5.7.
 5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
 6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
 7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
