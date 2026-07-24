@@ -54,6 +54,11 @@ def main() -> None:
             "conversation uses bounded language/history policy")
     init_source = (COMPONENT / "__init__.py").read_text()
     require("Platform.SENSOR" in init_source, "health sensor platform is loaded")
+    # config_entry_only_config_schema is a factory: it must be called with the
+    # domain, not assigned bare, or HA 2024.11+ fails setup with
+    # "argument of type 'function' is not a container or iterable".
+    require("cv.config_entry_only_config_schema(" in init_source,
+            "CONFIG_SCHEMA calls the schema factory with the domain")
     diagnostics = (COMPONENT / "diagnostics.py").read_text()
     require("CONF_SOCKET" not in diagnostics.split("return", 1)[-1],
             "diagnostics return does not expose socket config")
