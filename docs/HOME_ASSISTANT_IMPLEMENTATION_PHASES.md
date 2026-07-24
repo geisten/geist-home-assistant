@@ -70,11 +70,18 @@ Remaining executable slices:
    is the Phase-5 `app-v*` release — the release policy must keep
    integration releases selectable as default (e.g. publish app releases
    with `--latest=false`).
-2. [P4.2 second beta and real N-1 to N upgrade #12](https://github.com/geisten/geist-home-assistant/issues/12)
-3. [P4.3 compatibility matrix and release policy #13](https://github.com/geisten/geist-home-assistant/issues/13)
+2. ✅ [P4.2 second beta and real N-1 to N upgrade #12](https://github.com/geisten/geist-home-assistant/issues/12)
+   — delivered: `v0.1.0-beta.3` ships the CONFIG_SCHEMA load fix (#28); the
+   beta.1 → beta.3 upgrade retains and loads the config entry, evidence in
+   [benchmarks/hacs-upgrade-beta1-to-beta3-20260724.md](benchmarks/hacs-upgrade-beta1-to-beta3-20260724.md)
+   (remaining: HACS update-button UI screenshot).
+3. ✅ [P4.3 compatibility matrix and release policy #13](https://github.com/geisten/geist-home-assistant/issues/13)
+   — delivered: `compatibility.json` as canonical source, contract test
+   binding hacs.json/manifest/protocol/README/CI to it, two-version
+   disposable-HA matrix (min line + current stable), `RELEASING.md` policy
+   and checklist.
 
-P4.3 can proceed in parallel. P4.2 starts only after P4.1 and must contain a
-real reviewed integration change rather than an empty release. A
+A
 separate `home-assistant/brands` PR is no longer required for this custom
 integration because HA 2026.3+ supports local `brand/` assets; move them to the
 Brands repository only if the integration later targets HA Core.
