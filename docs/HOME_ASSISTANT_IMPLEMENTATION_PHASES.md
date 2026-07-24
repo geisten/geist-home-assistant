@@ -46,7 +46,7 @@ Phases 2 and 3 established the native beta and the host-neutral dynamic-tools
 contract before the repository split. Their normative engine artifacts now live
 in `geisten/geistlib`; this plan continues with HA-owned product work.
 
-## Phase 4 — HACS integration distribution 🚧
+## Phase 4 — HACS integration distribution ✅
 
 Canonical tracking: [Phase 4 epic #11](https://github.com/geisten/geist-home-assistant/issues/11).
 
@@ -57,9 +57,10 @@ Delivered additionally: local HA 2026.3+ brand assets, validation without a
 brands ignore, and package-equivalent clean install/replacement-upgrade checks
 against a disposable HA Core container.
 
-Published: `v0.1.0-beta.1` with a validated `geist_conversation.zip` asset.
+Published: `v0.1.0-beta.1` through `v0.1.0-beta.3`, each with a validated
+`geist_conversation.zip` asset.
 
-Remaining executable slices:
+Delivered slices:
 
 1. ✅ [P4.1 real HACS UI clean install #10](https://github.com/geisten/geist-home-assistant/issues/10)
    — delivered: real-UI clean install of `v0.1.0-beta.1` on HA 2026.7.3 /
@@ -81,8 +82,7 @@ Remaining executable slices:
    disposable-HA matrix (min line + current stable), `RELEASING.md` policy
    and checklist.
 
-A
-separate `home-assistant/brands` PR is no longer required for this custom
+A separate `home-assistant/brands` PR is no longer required for this custom
 integration because HA 2026.3+ supports local `brand/` assets; move them to the
 Brands repository only if the integration later targets HA Core.
 
@@ -102,28 +102,28 @@ Canonical tracking: [Phase 5 epic #2](https://github.com/geisten/geist-home-assi
    [app-v0.1.0](https://github.com/geisten/geist-home-assistant/releases/tag/app-v0.1.0)
    with signed per-arch digests, SBOM/provenance attestations, generic
    manifest, and pull-by-digest smokes on both architectures.
-3. [P5.3 Private app transport and Config Flow #5](https://github.com/geisten/geist-home-assistant/issues/5)
+3. ✅ [P5.3 Private app transport and Config Flow #5](https://github.com/geisten/geist-home-assistant/issues/5)
    — implemented: fail-closed address parsing (Unix path or internal
    `host:port`), socat bridge on container port 8099 without a host port,
    healthcheck through the bridge, golden unix+tcp contract tests; HA-OS
    end-to-end evidence lands with P5.7.
-4. [P5.4 Resource preflight and resident runtime lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
+4. ✅ [P5.4 Resource preflight and resident runtime lifecycle #6](https://github.com/geisten/geist-home-assistant/issues/6)
    — implemented: arch/RAM/disk preflight with structured fail-closed
    status lines and tunable thresholds, single resident runtime start,
    model-free negative fixtures; residency evidence under load lands
    with P5.7.
-5. [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
+5. ✅ [P5.5 Watchdog, health, Repairs and recovery #7](https://github.com/geisten/geist-home-assistant/issues/7)
    — implemented: Supervisor tcp watchdog (bounded by its restart
    throttle), readiness/liveness split documented, stable instance id in
    request logs, model-free chaos suite (runtime death, transport
    interruption, invalid health frame, no-replay, deduplicated Repair,
    recovery).
-6. [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
+6. ✅ [P5.6 Upgrade, rollback and backup boundary #8](https://github.com/geisten/geist-home-assistant/issues/8)
    — implemented: /data fully excluded from backups (stateless pre-1.0),
    stale-state upgrade/rollback lifecycle test, protocol gate keeps a
    non-dynamic-tools runtime from ever looking healthy, compatibility
    matrix seeded for P4.3.
-7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9](https://github.com/geisten/geist-home-assistant/issues/9)
+7. [P5.7 HA OS E2E and 24-hour Pi 5 soak #9] **NEXT**(https://github.com/geisten/geist-home-assistant/issues/9)
 
 The protected `aarch64`/`amd64` scaffold, restrictive AppArmor, private runtime
 boundary, healthcheck, and verified-input CI are already complete.
