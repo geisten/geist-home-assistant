@@ -11,10 +11,30 @@ engine remains Home-Assistant-neutral.
 ## Status
 
 This is pre-1.0 software. The dynamic-tools integration and Linux Unix-socket
-developer path work; the protected HA app is currently a build-only scaffold.
+developer path work; the protected HA app publishes signed multi-arch images
+and connects over a private internal transport.
 See [the implementation phases](docs/HOME_ASSISTANT_IMPLEMENTATION_PHASES.md)
 for the executable roadmap.
 The complete documentation map is in [docs/README.md](docs/README.md).
+
+## Compatibility
+
+`compatibility.json` is the canonical source; `README`, `hacs.json`, the
+manifest, the protocol fixture, and CI are tested against it, so nothing here
+can silently drift and no untested combination is claimed as supported.
+
+| Item | Supported |
+|---|---|
+| Home Assistant (minimum) | 2026.6.0 |
+| Home Assistant (tested in CI) | 2026.6.1, 2026.7.3 |
+| Distribution | HACS custom repository, ZIP release |
+| Runtime protocol | `dynamic-tools-v1` (required) |
+| Integration `0.1.0-beta.3` | protocol `dynamic-tools-v1` |
+
+Pre-1.0 policy: config-entry data may change between betas; the integration
+supports the immediately previous release (N−1) for upgrades and does not
+guarantee migration of legacy or REST-era configuration. Release rules and the
+per-release checklist are in [RELEASING.md](RELEASING.md).
 
 ## Repository layout
 

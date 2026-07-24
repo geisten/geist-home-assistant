@@ -33,7 +33,15 @@ jobs:
 
   disposable-ha:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Must equal compatibility.json homeassistant.tested (enforced by
+        # tests/test_compatibility.py): minimum first, current stable last.
+        ha_version: ["2026.6.1", "2026.7.3"]
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-      - name: Install and upgrade package in disposable Home Assistant
+      - name: Install and upgrade package in Home Assistant ${{ matrix.ha_version }}
+        env:
+          HA_IMAGE: ghcr.io/home-assistant/home-assistant:${{ matrix.ha_version }}
         run: tests/test_hacs_ha_container.sh

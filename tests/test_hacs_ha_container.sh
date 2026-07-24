@@ -4,6 +4,7 @@ set -eu
 
 root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 ha_image=${HA_IMAGE:-ghcr.io/home-assistant/home-assistant:2026.6.1}
+echo "hacs_ha_container: testing against $ha_image"
 tmp=${TMPDIR:-/tmp}/geist-hacs-ha-$$
 trap 'rm -rf "$tmp"' EXIT HUP INT TERM
 
